@@ -24,61 +24,52 @@ function App() {
     setTimeout(() => setSent(false), 3000);
   };
 
+  if (!loggedIn) {
+    return (
+      <div style={container}>
+        <h2 style={{ marginBottom: 20 }}>Log in to Support Chat</h2>
+        <input
+          style={inputStyle}
+          placeholder="Enter your name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button style={buttonStyle} onClick={handleLogin}>Enter Chat</button>
+      </div>
+    );
+  }
+
   return (
-    <div style={wrapper}>
-      <div style={box}>
-        {!loggedIn ? (
-          <>
-            <img src="https://cryptologos.cc/logos/coinbase-coinbase-logo.png?v=026" alt="Coinbase Logo" style={{ width: 70, height: 70, filter: 'brightness(0) invert(1)', marginBottom: 20 }} />
-            <h2 style={{ marginBottom: 20 }}>Log in to Support</h2>
-            <input
-              style={inputStyle}
-              placeholder="Enter your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <button style={buttonStyle} onClick={handleLogin}>Enter</button>
-          </>
-        ) : (
-          <>
-            <h2>Welcome, {name}</h2>
-            <label style={labelStyle}>Choose where to send:</label>
-            <select style={inputStyle} value={method} onChange={(e) => setMethod(e.target.value)}>
-              <option value="telegram">Telegram</option>
-              <option value="email">Email</option>
-            </select>
-            <textarea
-              placeholder="Type your message..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows="4"
-              style={{ ...inputStyle, width: '100%' }}
-            />
-            <button style={buttonStyle} onClick={sendMessage}>Send</button>
-            {sent && <p style={{ color: "lightgreen", marginTop: 10 }}>✅ Message sent!</p>}
-          </>
-        )}
+    <div style={container}>
+      <h2>Welcome, {name}</h2>
+      <div style={{ marginTop: 20 }}>
+        <label style={labelStyle}>Choose where to send:</label>
+        <select style={inputStyle} value={method} onChange={(e) => setMethod(e.target.value)}>
+          <option value="telegram">Telegram</option>
+          <option value="email">Email</option>
+        </select>
+        <textarea
+          placeholder="Type your message..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          rows="4"
+          style={{ ...inputStyle, width: '100%' }}
+        />
+        <button style={buttonStyle} onClick={sendMessage}>Send</button>
+        {sent && <p style={{ color: "lightgreen", marginTop: 10 }}>✅ Message sent!</p>}
       </div>
     </div>
   );
 }
 
-const wrapper = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  minHeight: '100vh',
-  backgroundColor: '#0a0f1c'
-};
-
-const box = {
-  width: '100%',
+const container = {
   maxWidth: 500,
-  background: '#1e293b',
-  padding: 30,
-  borderRadius: 12,
-  boxShadow: '0 0 20px rgba(0,0,0,0.3)',
-  textAlign: 'center'
+  margin: "100px auto",
+  background: "#1e293b",
+  padding: "30px",
+  borderRadius: "12px",
+  boxShadow: "0 0 20px rgba(0,0,0,0.3)",
+  textAlign: "center"
 };
 
 const inputStyle = {
@@ -96,8 +87,7 @@ const labelStyle = {
   display: 'block',
   marginBottom: 6,
   fontWeight: '600',
-  color: '#e2e8f0',
-  marginTop: 20
+  color: '#e2e8f0'
 };
 
 const buttonStyle = {
