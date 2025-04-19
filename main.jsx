@@ -3,73 +3,90 @@ import ReactDOM from "react-dom/client";
 
 function App() {
   const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [sent, setSent] = React.useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const res = await fetch("http://localhost:5000/send-support-message", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, message }),
-    });
-    const data = await res.json();
-    if (data.success) setSent(true);
+  const handleLogin = () => {
+    if (name.trim()) setLoggedIn(true);
   };
 
-  return (
-    <div style={{ maxWidth: 600, margin: '0 auto', padding: '60px 20px', background: '#111827', marginTop: '40px', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
-      <div style={{ textAlign: 'center', marginBottom: 40 }}>
-        <img src="https://cryptologos.cc/logos/coinbase-coinbase-logo.png?v=026" alt="Coinbase Logo" style={{ width: 70, height: 70, filter: 'brightness(0) invert(1)' }} />
-        <h1 style={{ color: '#60a5fa', fontSize: '28px', marginTop: 20 }}>Coinbase Support</h1>
-        <p style={{ color: '#cbd5e1' }}>How can we help you today?</p>
+  const sendMessage = async () => {
+    if (!message.trim()) return;
+    await fetch("http://localhost:5000/send-support-message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email: "chat@client.com", message })
+    });
+    setMessage("");
+    setSent(true);
+    setTimeout(() => setSent(false), 3000);
+  };
+
+  if (!loggedIn) {
+    return (
+      <div style={container}>
+        <h2 style={{ marginBottom: 20 }}>Log in to Support Chat</h2>
+        <input
+          style={inputStyle}
+          placeholder="Enter your name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button style={buttonStyle} onClick={handleLogin}>Enter Chat</button>
       </div>
-      <form onSubmit={handleSubmit}>
-        <label style={labelStyle}>Your name</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} required style={inputStyle} placeholder="Name" />
+    );
+  }
 
-        <label style={{ ...labelStyle, marginTop: 20 }}>Your email</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required style={inputStyle} placeholder="Email" />
-
-        <label style={{ ...labelStyle, marginTop: 20 }}>Message</label>
-        <textarea value={message} onChange={(e) => setMessage(e.target.value)} required style={{ ...inputStyle, height: 100 }} placeholder="How can we help?"></textarea>
-
-        <button type="submit" style={buttonStyle}>Send</button>
-      </form>
-      {sent && <p style={{ color: '#22c55e', marginTop: 20 }}>✅ Message sent successfully!</p>}
+  return (
+    <div style={container}>
+      <h2>Welcome, {name}</h2>
+      <div style={{ marginTop: 20 }}>
+        <textarea
+          placeholder="Type your message..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          rows="4"
+          style={{ ...inputStyle, width: '100%' }}
+        />
+        <button style={buttonStyle} onClick={sendMessage}>Send</button>
+        {sent && <p style={{ color: "lightgreen", marginTop: 10 }}>✅ Message sent!</p>}
+      </div>
     </div>
   );
 }
 
-const inputStyle = {
-  width: '100%',
-  padding: '12px',
-  borderRadius: '8px',
-  border: '1px solid #334155',
-  backgroundColor: '#1e293b',
-  color: '#f1f5f9',
-  fontSize: '16px',
-  marginBottom: '10px'
+const container = {
+  maxWidth: 500,
+  margin: "100px auto",
+  background: "#1e293b",
+  padding: "30px",
+  borderRadius: "12px",
+  boxShadow: "0 0 20px rgba(0,0,0,0.3)",
+  textAlign: "center"
 };
 
-const labelStyle = {
-  display: 'block',
-  marginBottom: 6,
-  fontWeight: '600',
-  color: '#e2e8f0'
+const inputStyle = {
+  width: "100%",
+  padding: "12px",
+  borderRadius: "8px",
+  border: "1px solid #334155",
+  backgroundColor: "#0f172a",
+  color: "#f8fafc",
+  fontSize: "16px",
+  marginBottom: "10px"
 };
 
 const buttonStyle = {
-  width: '100%',
-  background: '#3b82f6',
-  color: '#fff',
-  padding: '14px',
-  border: 'none',
-  borderRadius: '8px',
-  fontSize: '16px',
-  marginTop: '30px',
-  cursor: 'pointer'
+  width: "100%",
+  padding: "12px",
+  borderRadius: "8px",
+  backgroundColor: "#3b82f6",
+  color: "#fff",
+  border: "none",
+  cursor: "pointer",
+  fontSize: "16px",
+  marginTop: "10px"
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);

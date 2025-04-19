@@ -1,5 +1,5 @@
 {
-  "name": "coinbase-support-dark",
+  "name": "coinbase-login-chat",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
