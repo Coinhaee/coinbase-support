@@ -19,28 +19,31 @@ def send_support_message():
     name = data.get("name")
     email = data.get("email")
     message = data.get("message")
+    method = data.get("method")
 
     full_msg = f"📨 New Support Message\n👤 From: {name}\n📧 Email: {email}\n💬 Message: {message}"
 
-    try:
-        requests.post(f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage", json={
-            "chat_id": TELEGRAM_CHAT_ID,
-            "text": full_msg
-        })
-    except Exception as e:
-        print("Telegram error:", e)
+    if method == "telegram":
+        try:
+            requests.post(f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage", json={
+                "chat_id": TELEGRAM_CHAT_ID,
+                "text": full_msg
+            })
+        except Exception as e:
+            print("Telegram error:", e)
 
-    try:
-        msg = MIMEText(full_msg)
-        msg['Subject'] = "New Support Message"
-        msg['From'] = email
-        msg['To'] = EMAIL_ADDRESS
+    elif method == "email":
+        try:
+            msg = MIMEText(full_msg)
+            msg['Subject'] = "New Support Message"
+            msg['From'] = email
+            msg['To'] = EMAIL_ADDRESS
 
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-            smtp.send_message(msg)
-    except Exception as e:
-        print("Email error:", e)
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                smtp.send_message(msg)
+        except Exception as e:
+            print("Email error:", e)
 
     return jsonify({"success": True})
 
