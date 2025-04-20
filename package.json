@@ -1,5 +1,5 @@
 {
-  "name": "coinbase-support-fixed",
+  "name": "coinbase-style-support",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
