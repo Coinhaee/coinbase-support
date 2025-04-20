@@ -57,7 +57,7 @@ function App() {
                   <div style={{ fontSize: 24 }}>{cat.icon}</div>
                   <div style={{ fontSize: 14, fontWeight: 600 }}>{cat.title}</div>
                   {openCategory === i && (
-                    <div style={{ marginTop: 10, color: "#cbd5e1", fontSize: 12 }}>{cat.answer}</div>
+                    <div style={{ marginTop: 8, color: "#cbd5e1", fontSize: 12 }}>{cat.answer}</div>
                   )}
                 </div>
               ))}
@@ -71,9 +71,9 @@ function App() {
             <button style={buttonStyle} onClick={() => setShowLogin(true)}>Sign in to speak with us</button>
           </>
         ) : !loggedIn ? (
-          <div style={loginWrapper}>
+          <div style={fullHeightCenter}>
             <div style={box}>
-              <h2>Log in to Support</h2>
+              <h2 style={{ marginBottom: 20 }}>Log in to Support</h2>
               <input style={inputStyle} placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
               <input type="password" style={inputStyle} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
               <button style={buttonStyle} onClick={handleLogin}>Log in</button>
@@ -110,25 +110,25 @@ const logoStyle = {
 };
 
 const wrapper = {
-  maxWidth: 900,
+  maxWidth: 1000,
   margin: "0 auto",
   padding: 20,
   textAlign: "center"
 };
 
-const loginWrapper = {
+const fullHeightCenter = {
+  minHeight: "90vh",
   display: "flex",
   justifyContent: "center",
-  alignItems: "center",
-  minHeight: "80vh"
+  alignItems: "center"
 };
 
 const catRow = {
   display: "flex",
   justifyContent: "space-between",
-  flexWrap: "wrap",
   gap: "10px",
-  marginBottom: 40
+  marginBottom: 40,
+  flexWrap: "nowrap"
 };
 
 const catCard = {
@@ -136,8 +136,7 @@ const catCard = {
   padding: 12,
   borderRadius: 10,
   color: "#f1f5f9",
-  width: "18%",
-  minWidth: 120,
+  width: "19%",
   cursor: "pointer",
   textAlign: "center"
 };
@@ -147,8 +146,8 @@ const box = {
   padding: 30,
   borderRadius: 12,
   textAlign: "center",
-  maxWidth: 500,
-  margin: "0 auto"
+  width: "100%",
+  maxWidth: 400
 };
 
 const policyBox = {
