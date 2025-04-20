@@ -1,5 +1,5 @@
 {
-  "name": "coinbase-support-mail-telegram-icon",
+  "name": "coinbase-telegram-auto",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
