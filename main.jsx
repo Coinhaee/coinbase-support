@@ -42,7 +42,9 @@ function App() {
   return (
     <div>
       <div style={header}>
-        <img src="https://cryptologos.cc/logos/coinbase-coinbase-logo.png?v=026" alt="Coinbase" style={logoStyle} />
+        <a href="/" style={{ display: "flex", alignItems: "center" }}>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Coinbase_Logo.svg/512px-Coinbase_Logo.svg.png" alt="Coinbase" style={logoStyle} />
+        </a>
       </div>
 
       <div style={wrapper}>
@@ -100,13 +102,13 @@ function App() {
 
 const header = {
   background: "#0a0f1c",
-  padding: "10px 20px",
+  padding: "12px 30px",
   display: "flex",
   alignItems: "center"
 };
 
 const logoStyle = {
-  height: "32px"
+  height: "28px"
 };
 
 const wrapper = {
@@ -160,13 +162,15 @@ const policyBox = {
 
 const inputStyle = {
   width: "100%",
+  maxWidth: "100%",
   padding: "12px",
   borderRadius: "8px",
   backgroundColor: "#0f172a",
   border: "1px solid #334155",
   color: "#f8fafc",
   marginBottom: "10px",
-  fontSize: "16px"
+  fontSize: "16px",
+  boxSizing: "border-box"
 };
 
 const buttonStyle = {
