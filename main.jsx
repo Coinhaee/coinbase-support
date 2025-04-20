@@ -40,7 +40,8 @@ function App() {
   };
 
   return (
-    <div style={wrapper}>
+    <div style={header}><img src="/coinbase-logo-box.jpg" alt="Coinbase top left" style={logoTopLeft} /></div>
+<div style={wrapper}>
       {!showLogin ? (
         <>
           <h1 style={{ fontSize: 28, marginBottom: 10 }}>Find answers to your questions</h1>
@@ -69,7 +70,7 @@ function App() {
         <div style={centerScreen}>
           <div style={box}>
             <img
-              src="/coinbase-logo.jpg"
+              src="/coinbase-logo-box.jpg"
               alt="Coinbase"
               style={logoStyle}
             />
@@ -83,7 +84,7 @@ function App() {
         <div style={centerScreen}>
           <div style={box}>
             <img
-              src="/coinbase-logo.jpg"
+              src="/coinbase-logo-box.jpg"
               alt="Coinbase"
               style={logoStyle}
             />
@@ -202,3 +203,14 @@ const linkButton = {
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+
+const header = {
+  width: "100%",
+  padding: "12px 20px",
+  background: "#0a0f1c"
+};
+
+const logoTopLeft = {
+  height: "32px"
+};
