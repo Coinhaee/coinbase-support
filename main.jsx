@@ -69,7 +69,7 @@ function App() {
         <div style={centerScreen}>
           <div style={box}>
             <img
-              src="/coinbase-logo.png"
+              src="/coinbase-logo.jpg"
               alt="Coinbase"
               style={logoStyle}
             />
@@ -83,7 +83,7 @@ function App() {
         <div style={centerScreen}>
           <div style={box}>
             <img
-              src="/coinbase-logo.png"
+              src="/coinbase-logo.jpg"
               alt="Coinbase"
               style={logoStyle}
             />
