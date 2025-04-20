@@ -9,6 +9,7 @@ function App() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
+  const [openCategory, setOpenCategory] = useState(null);
 
   const handleLogin = () => {
     if (name && password) setLoggedIn(true);
@@ -27,19 +28,16 @@ function App() {
   };
 
   const categories = [
-    { title: "Payments", icon: "💳" },
-    { title: "Account", icon: "👤" },
-    { title: "Security", icon: "🔒" },
-    { title: "Verification", icon: "✅" },
-    { title: "Limits & Fees", icon: "📊" }
+    { title: "Payments", icon: "💳", answer: "Learn how to send, receive, and manage crypto payments on Coinbase." },
+    { title: "Account", icon: "👤", answer: "Manage your profile, change your password, or close your account." },
+    { title: "Security", icon: "🔒", answer: "Protect your account with 2-step verification and strong passwords." },
+    { title: "Verification", icon: "✅", answer: "Complete identity verification to access all features." },
+    { title: "Limits & Fees", icon: "📊", answer: "Understand your buying limits and Coinbase’s fee structure." }
   ];
 
-  const faqs = [
-    { q: "How do I recover my account?", a: "Go to the login page, click on 'Forgot password' and follow the steps." },
-    { q: "What is the Coinbase refund policy?", a: "Coinbase does not offer refunds for crypto transactions." },
-    { q: "How do I reset my password?", a: "You can reset your password via the login page with your registered email." },
-    { q: "How to protect against phishing?", a: "Always check the sender and never share codes. Coinbase will never ask for them." }
-  ];
+  const toggleCategory = (i) => {
+    setOpenCategory(openCategory === i ? null : i);
+  };
 
   return (
     <div style={wrapper}>
@@ -50,9 +48,12 @@ function App() {
 
           <div style={catGrid}>
             {categories.map((cat, i) => (
-              <div key={i} style={catCard}>
+              <div key={i} style={catCard} onClick={() => toggleCategory(i)}>
                 <div style={{ fontSize: 32 }}>{cat.icon}</div>
-                <div>{cat.title}</div>
+                <div style={{ fontWeight: 600 }}>{cat.title}</div>
+                {openCategory === i && (
+                  <div style={{ marginTop: 10, color: "#cbd5e1", fontSize: 14 }}>{cat.answer}</div>
+                )}
               </div>
             ))}
           </div>
@@ -62,19 +63,8 @@ function App() {
             <p>We’re here to help you stay safe and secure while using Coinbase.</p>
           </div>
 
-          <div style={faqBox}>
-            <h3>Common questions</h3>
-            <ul style={{ paddingLeft: 0 }}>
-              {faqs.map((item, i) => (
-                <li key={i} style={{ marginBottom: 20, listStyle: "none" }}>
-                  <strong>🔹 {item.q}</strong>
-                  <div style={{ fontSize: 14, color: "#cbd5e1", marginTop: 4 }}>{item.a}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           <button style={buttonStyle} onClick={() => setShowLogin(true)}>Sign in to speak with us</button>
+          <button style={chatButton}>💬 Live Chat</button>
         </>
       ) : !loggedIn ? (
         <div style={loginWrapper}>
@@ -118,7 +108,7 @@ const loginWrapper = {
 
 const catGrid = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+  gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
   gap: 20,
   marginBottom: 40
 };
@@ -128,8 +118,8 @@ const catCard = {
   padding: 20,
   borderRadius: 10,
   color: "#f1f5f9",
-  fontWeight: 600,
-  fontSize: 16
+  fontSize: 16,
+  cursor: "pointer"
 };
 
 const box = {
@@ -140,14 +130,6 @@ const box = {
 };
 
 const policyBox = {
-  background: "#1e293b",
-  padding: 20,
-  borderRadius: 10,
-  marginBottom: 40,
-  textAlign: "left"
-};
-
-const faqBox = {
   background: "#0f172a",
   padding: 20,
   borderRadius: 10,
@@ -173,7 +155,13 @@ const buttonStyle = {
   border: "none",
   borderRadius: "8px",
   fontSize: "16px",
-  cursor: "pointer"
+  cursor: "pointer",
+  marginBottom: "20px"
+};
+
+const chatButton = {
+  ...buttonStyle,
+  backgroundColor: "#22c55e"
 };
 
 const linkButton = {
