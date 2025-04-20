@@ -35,10 +35,10 @@ function App() {
   ];
 
   const faqs = [
-    "How do I recover my account?",
-    "What is the Coinbase refund policy?",
-    "How do I reset my password?",
-    "How to protect against phishing?"
+    { q: "How do I recover my account?", a: "Go to the login page, click on 'Forgot password' and follow the steps." },
+    { q: "What is the Coinbase refund policy?", a: "Coinbase does not offer refunds for crypto transactions." },
+    { q: "How do I reset my password?", a: "You can reset your password via the login page with your registered email." },
+    { q: "How to protect against phishing?", a: "Always check the sender and never share codes. Coinbase will never ask for them." }
   ];
 
   return (
@@ -65,8 +65,11 @@ function App() {
           <div style={faqBox}>
             <h3>Common questions</h3>
             <ul style={{ paddingLeft: 0 }}>
-              {faqs.map((q, i) => (
-                <li key={i} style={{ marginBottom: 10, listStyle: "none" }}>🔹 {q}</li>
+              {faqs.map((item, i) => (
+                <li key={i} style={{ marginBottom: 20, listStyle: "none" }}>
+                  <strong>🔹 {item.q}</strong>
+                  <div style={{ fontSize: 14, color: "#cbd5e1", marginTop: 4 }}>{item.a}</div>
+                </li>
               ))}
             </ul>
           </div>
@@ -74,11 +77,13 @@ function App() {
           <button style={buttonStyle} onClick={() => setShowLogin(true)}>Sign in to speak with us</button>
         </>
       ) : !loggedIn ? (
-        <div style={box}>
-          <h2>Log in to Support</h2>
-          <input style={inputStyle} placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
-          <input type="password" style={inputStyle} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <button style={buttonStyle} onClick={handleLogin}>Log in</button>
+        <div style={loginWrapper}>
+          <div style={box}>
+            <h2>Log in to Support</h2>
+            <input style={inputStyle} placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
+            <input type="password" style={inputStyle} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <button style={buttonStyle} onClick={handleLogin}>Log in</button>
+          </div>
         </div>
       ) : (
         <div style={box}>
@@ -102,6 +107,13 @@ const wrapper = {
   margin: "0 auto",
   padding: 20,
   textAlign: "center"
+};
+
+const loginWrapper = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  minHeight: "80vh"
 };
 
 const catGrid = {
